@@ -340,6 +340,11 @@ var CustomElementDefinition;
               var link = node;
               return function() {
                 link.removeEventListener('load', onLoad);
+                // Note: this fix is a temporary workaround.
+                // See https://github.com/skatejs/web-components/issues/5 for background.
+                if (!link.import) {
+                  return;
+                }
                 this._observeRoot(link.import);
                 this._addNodes(link.import.childNodes);
               }.bind(this);
